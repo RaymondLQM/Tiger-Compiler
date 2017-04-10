@@ -46,14 +46,54 @@ extern int yydebug;
   enum yytokentype
   {
     WHILE = 258,
-    OTHER = 259,
-    EOL = 260
+    FOR = 259,
+    TO = 260,
+    BREAK = 261,
+    LET = 262,
+    IN = 263,
+    END = 264,
+    FUNCTION = 265,
+    VAR = 266,
+    TYPE = 267,
+    ARRAY = 268,
+    IF = 269,
+    THEN = 270,
+    ELSE = 271,
+    DO = 272,
+    OF = 273,
+    NIL = 274,
+    EQ = 275,
+    NE = 276,
+    LE = 277,
+    LEEQ = 278,
+    LA = 279,
+    LAEQ = 280,
+    AND = 281,
+    OR = 282,
+    ASSIGN = 283,
+    ID = 284,
+    INT = 285,
+    STRING = 286,
+    EOL = 287,
+    OTHER = 288
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 5 "./source/tiger.y" /* yacc.c:1909  */
+
+	int int_val;
+	char str[80];
+
+
+#line 94 "./tmp/tiger.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
