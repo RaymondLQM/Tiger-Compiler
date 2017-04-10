@@ -1,20 +1,19 @@
-lextest: driver.o lex.yy.o errormsg.o util.o
-	cc -g -o lextest driver.o lex.yy.o errormsg.o util.o
+SOURCE := ./source
+TEMP := ./tmp
 
-driver.o: driver.c tokens.h errormsg.h util.h
-	cc -g -c driver.c
+compiler: $(TEMP)/tiger.tab.o $(TEMP)/lex.yy.o 
+	gcc -o compiler $(TEMP)/lex.yy.o $(TEMP)/tiger.tab.o
 
-errormsg.o: errormsg.c errormsg.h util.h
-	cc -g -c errormsg.c
+$(TEMP)/tiger.tab.o: $(TEMP)/tiger.tab.c
+	gcc -c $(TEMP)/tiger.tab.c -o $(TEMP)/tiger.tab.o
 
-lex.yy.o: lex.yy.c tokens.h errormsg.h util.h
-	cc -g -c lex.yy.c
-
-lex.yy.c: tiger.lex
-	lex tiger.lex
-
-util.o: util.c util.h
-	cc -g -c util.c
+$(TEMP)/tiger.tab.c: $(SOURCE)/tiger.y
+	bison --defines=$(TEMP)/tiger.tab.h $(SOURCE)/tiger.y
+	bison -o $(TEMP)/tiger.tab.c $(SOURCE)/tiger.y
+	
+$(TEMP)/lex.yy.o: $(SOURCE)/tiger.lex 
+	flex -o $(TEMP)/lex.yy.c $(SOURCE)/tiger.lex 
+	gcc -c $(TEMP)/lex.yy.c -o $(TEMP)/lex.yy.o
 
 clean: 
-	rm -f a.out util.o driver.o lex.yy.o lex.yy.c errormsg.o
+	rm -f $(TEMP)/*
