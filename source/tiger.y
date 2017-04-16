@@ -42,6 +42,8 @@
 %%
 Program: 
 	exp { program_root = $1; }
+	| LET decList in stmList end {program_root = A_LetExp(0,$2,$4);}
+	;
 Exp:
 	ID { $$ = A_VarExp(tokPos, A_SimpleVar(tokPos, S_Symbol($1))); }
 	|NIL { $$ = A_NilExp(tokPos); }
@@ -49,6 +51,33 @@ Exp:
 	|STRING { $$ = A_StringExp(tokPos, $1); }
 	|ID LPAREN ExpList RPAREN { $$ = A_CallExp(tokPos, S_Symbol($1), $3); }
 	|ID LPAREN RPAREN { $$ = A_CallExp(tokPos, S_Symbol($1), $3); }
+	;
+
+decList:
+	dec decList {}
+	| tydec {}
+	| vardec {}
+	| fundec {}
+	;
+tydec :
+	TYPE ID EQ ty {}
+	;
+ty:	
+	ID {}
+	| LBRACE tyfields RBRACE {}
+	| ARRAY OF ID {}
+	;
+tyfield:
+	ID COLON ID LBRACE ID COLON ID RBRACE {}
+	|
+	;
+
+vardec:
+	VAR ID COLON EQ	Exp {}
+	| VAR ID COLON ID COLON EQ Exp {}
+	;
+
+
 %%
 int main(int argc, char **argv){
 	yyparse();

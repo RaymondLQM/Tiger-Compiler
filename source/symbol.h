@@ -5,6 +5,9 @@
  * symbol.h - Symbols and symbol-tables
  *
  */
+struct S_symbol_{
+	int symID;
+};
 
 typedef struct S_symbol_ *S_symbol;
 

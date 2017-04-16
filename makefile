@@ -6,11 +6,11 @@ OBJ := $(TEMP)/absyn.o $(TEMP)/tiger.tab.o $(TEMP)/lex.yy.o $(TEMP)/symbol.o $(T
 compiler: $(OBJ)
 	gcc -o compiler $(OBJ)
 
-$(TEMP)/absyn.o: $(SOURCE)/absyn.c
-	gcc -c $(SOURCE)/absyn.c -o $(TEMP)/absyn.o
-
 $(TEMP)/symbol.o: $(SOURCE)/symbol.c
 	gcc -c $(SOURCE)/symbol.c -o $(TEMP)/symbol.o
+
+$(TEMP)/absyn.o: $(SOURCE)/absyn.c
+	gcc -c $(SOURCE)/absyn.c -o $(TEMP)/absyn.o
 	
 $(TEMP)/tiger.tab.o: $(TEMP)/tiger.tab.c
 	gcc -c $(TEMP)/tiger.tab.c -o $(TEMP)/tiger.tab.o
