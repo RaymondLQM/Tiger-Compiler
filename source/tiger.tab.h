@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_TMP_TIGER_TAB_H_INCLUDED
-# define YY_YY_TMP_TIGER_TAB_H_INCLUDED
+#ifndef YY_YY_TIGER_TAB_H_INCLUDED
+# define YY_YY_TIGER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,35 +45,50 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    WHILT = 258,
-    FOR = 259,
-    TO = 260,
-    BREAK = 261,
-    LTT = 262,
-    IN = 263,
-    END = 264,
-    FUNCTION = 265,
-    VAR = 266,
-    TYPE = 267,
-    ARRAY = 268,
-    IF = 269,
-    THEN = 270,
-    ELSE = 271,
-    DO = 272,
-    OF = 273,
-    NIL = 274,
-    EQ = 275,
-    NE = 276,
-    LT = 277,
-    LE = 278,
-    AND = 279,
-    OR = 280,
-    ASSIGN = 281,
-    ID = 282,
-    INT = 283,
-    STRING = 284,
-    EOL = 285,
-    OTHER = 286
+    STRINGG = 258,
+    INTT = 259,
+    COMMA = 260,
+    COLON = 261,
+    SEMICOLON = 262,
+    LPAREN = 263,
+    RPAREN = 264,
+    LBRACK = 265,
+    RBRACK = 266,
+    LBRACE = 267,
+    RBRACE = 268,
+    DOT = 269,
+    PLUS = 270,
+    MINUS = 271,
+    TIMES = 272,
+    DIVIDE = 273,
+    EQ = 274,
+    NE = 275,
+    LT = 276,
+    LE = 277,
+    GT = 278,
+    GE = 279,
+    ID = 280,
+    AND = 281,
+    OR = 282,
+    ASSIGN = 283,
+    ARRAY = 284,
+    IF = 285,
+    THEN = 286,
+    ELSE = 287,
+    WHILE = 288,
+    FOR = 289,
+    TO = 290,
+    DO = 291,
+    LET = 292,
+    IN = 293,
+    END = 294,
+    OF = 295,
+    BREAK = 296,
+    NIL = 297,
+    FUNCTION = 298,
+    VAR = 299,
+    TYPE = 300,
+    ERROR = 301
   };
 #endif
 
@@ -82,13 +97,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 6 "./source/tiger.y" /* yacc.c:1909  */
+#line 10 "tiger.y" /* yacc.c:1909  */
 
-	int int_val;
-	char str[80];
+	int iVal;
+	string sVal;
+	A_dec decVal;
+	A_decList decListVal;
+	A_exp expVal;
 
-
-#line 92 "./tmp/tiger.tab.h" /* yacc.c:1909  */
+#line 109 "tiger.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -101,4 +118,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_TMP_TIGER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_TIGER_TAB_H_INCLUDED  */

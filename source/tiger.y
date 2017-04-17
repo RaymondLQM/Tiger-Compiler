@@ -1,86 +1,59 @@
 %{
-	#include <stdio.h>
 	#include <string.h>
-	#include "absyn.h"
 	#include "util.h"
-	#include "symbol.h"
-
-	int yylex(void);
-	A_exp program_root;
-	int tokPos = 0;
+	#include "absyn.h"
+	extern int yylex(void);
+	extern void showTree(A_exp root);
+	A_exp root;
 %}
-%union{
-	int ival;
-	string sval;
-	A_var var;
-	A_exp exp;
-	A_dec dec;
-	A_ty ty;
-	A_decList decList;
-	A_expList expList;
-	A_field field;
-	A_fieldList fieldList;
-	A_fundec fundec;
-	A_fundecList fundecList;
-	A_namety namety;
-	A_nametyList nametyList;
-	A_efield efield;
-	A_efieldList efieldList;
+
+%union {
+	int iVal;
+	string sVal;
+	A_dec decVal;
+	A_decList decListVal;
+	A_exp expVal;
 }
-%token <sval> ID STRING
-%token <ival> INT
+%start ProgramRoot
+%token <sval> STRINGG
+%token <ival> INTT
 %token 
   COMMA COLON SEMICOLON LPAREN RPAREN LBRACK RBRACK LBRACE RBRACE DOT 
-  PLUS MINUS TIMES DIVIDE EQ NE LT LE GT GE
+  PLUS MINUS TIMES DIVIDE EQ NE LT LE GT GE ID
   AND OR ASSIGN
   ARRAY IF THEN ELSE WHILE FOR TO DO LET IN END OF 
   BREAK NIL FUNCTION VAR TYPE 
-  EOL ERROR
+  ERROR
 
-%type <exp> Exp Program
-%type <expList> ExpList
+%type <expVal> Exp ProgramRoot
+%type <decVal> Dec
+%type <decListVal> DecList
+
 %%
-Program: 
-	exp { program_root = $1; }
-	| LET decList in stmList end {program_root = A_LetExp(0,$2,$4);}
+ProgramRoot:
+	Exp { root = $1; }
 	;
 Exp:
-	ID { $$ = A_VarExp(tokPos, A_SimpleVar(tokPos, S_Symbol($1))); }
-	|NIL { $$ = A_NilExp(tokPos); }
-	|INT { $$ = A_IntExp(tokPos, $1); }
-	|STRING { $$ = A_StringExp(tokPos, $1); }
-	|ID LPAREN ExpList RPAREN { $$ = A_CallExp(tokPos, S_Symbol($1), $3); }
-	|ID LPAREN RPAREN { $$ = A_CallExp(tokPos, S_Symbol($1), $3); }
+	INTT { $$ = A_IntExp(yylval.iVal); }
+	|Exp PLUS Exp { 
+		A_oper a = A_plusOP;
+		$$ = A_OpExp(a, $1, $3);
+		}
+	|LET DecList IN Exp END { $$ = A_LetExp($2, $4); }
 	;
 
-decList:
-	dec decList {}
-	| tydec {}
-	| vardec {}
-	| fundec {}
+DecList:
+	Dec { $$ = A_DecList($1, NULL); }
+	|Dec DecList { $$ = A_DecList($1, $2); }
+	| { $$ = A_DecList(NULL, NULL); }
 	;
-tydec :
-	TYPE ID EQ ty {}
+Dec:
+	{ $$ = A_Dec(); }
 	;
-ty:	
-	ID {}
-	| LBRACE tyfields RBRACE {}
-	| ARRAY OF ID {}
-	;
-tyfield:
-	ID COLON ID LBRACE ID COLON ID RBRACE {}
-	|
-	;
-
-vardec:
-	VAR ID COLON EQ	Exp {}
-	| VAR ID COLON ID COLON EQ Exp {}
-	;
-
-
 %%
 int main(int argc, char **argv){
 	yyparse();
+	showTree(root);
 }
 void yyerror(char *s){
 	printf("Error\n");

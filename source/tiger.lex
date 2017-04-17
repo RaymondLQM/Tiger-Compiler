@@ -1,25 +1,34 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "tiger.tab.h"
 #include "absyn.h"
+#include "util.h"
+#include "tiger.tab.h"
 %}
 
 id [a-zA-Z][a-zA-Z0-9_]*
 int_val [0-9]+
 str_val \".*\"
+DOT [.]
+LP \(
+RP \)
+LB \[
+RB \]
+LC \{
+RC \}
+
 
 %%
 ',' { return COMMA; }
 ':' { return COLON; }
 ';' { return SEMICOLON; }
-'(' { return LPAREN; }
-')' { return RPAREN; }
-'[' { return LBRACK; }
-']' { return RBRACK; }
-'{' { return LBRACE; }
-'}' { return RBRACE; }
-'.' { return DOT; }
+{LP} { return LPAREN; }
+{RP} { return RPAREN; }
+{LB} { return LBRACK; }
+{RB} { return RBRACK; }
+{LC} { return LBRACE; }
+{RC} { return RBRACE; }
+{DOT} { return DOT; }
 
 '+' { return PLUS; }
 '-' { return MINUS; }
@@ -52,25 +61,19 @@ else { return ELSE; }
 do { return DO; }
 of { return OF; }
 nil { return NIL; }
-operator { return yytext[0]; }
-
-
 
 id { 
-	strcpy(yylval.str, yytext); 
+	//strcpy(yylval.sVal, yytext); 
 	return ID; 
 	}
 int_val { 
-	yylval.int_val = atoi(yytext); 
-	return INT; 
+	yylval.iVal = atoi(yytext); 
+	return INTT; 
 	}
 str_val { 
-	int length = strlen(yytext);
-	if(length == 2)yylval.str_val = "";
-	else substr(yytext, 1, strlen(yytext) - 2, yylval.str_val); 
-	return STRING;
-	}
-\n { return EOL; } 
+	return STRINGG;
+	} 
+\n {}
 .  { return ERROR; }
 
 %%
