@@ -34,6 +34,11 @@ A_decList A_DecList(A_dec head, A_decList tail){
 	return p;
 } 
 void showTree(A_exp root){
+	if (root == NULL )
+	{
+		printf("No tree established!\n");
+		return 0;
+	}
 	if(root->kind != 2)printf("Error in Let\n");
 	else{
 		A_decList tmp1 = root->u.let.decs;

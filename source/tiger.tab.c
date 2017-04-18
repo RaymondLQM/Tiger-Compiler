@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.4"
+#define YYBISON_VERSION "3.0.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -155,7 +155,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
+typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 10 "tiger.y" /* yacc.c:355  */
@@ -168,8 +168,6 @@ union YYSTYPE
 
 #line 170 "tiger.tab.c" /* yacc.c:355  */
 };
-
-typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -183,7 +181,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 187 "tiger.tab.c" /* yacc.c:358  */
+#line 185 "tiger.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1271,13 +1269,13 @@ yyreduce:
         case 2:
 #line 34 "tiger.y" /* yacc.c:1646  */
     { root = (yyvsp[0].expVal); }
-#line 1275 "tiger.tab.c" /* yacc.c:1646  */
+#line 1273 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 37 "tiger.y" /* yacc.c:1646  */
     { (yyval.expVal) = A_IntExp(yylval.iVal); }
-#line 1281 "tiger.tab.c" /* yacc.c:1646  */
+#line 1279 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
@@ -1286,41 +1284,41 @@ yyreduce:
 		A_oper a = A_plusOP;
 		(yyval.expVal) = A_OpExp(a, (yyvsp[-2].expVal), (yyvsp[0].expVal));
 		}
-#line 1290 "tiger.tab.c" /* yacc.c:1646  */
+#line 1288 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 42 "tiger.y" /* yacc.c:1646  */
     { (yyval.expVal) = A_LetExp((yyvsp[-3].decListVal), (yyvsp[-1].expVal)); }
-#line 1296 "tiger.tab.c" /* yacc.c:1646  */
+#line 1294 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 46 "tiger.y" /* yacc.c:1646  */
     { (yyval.decListVal) = A_DecList((yyvsp[0].decVal), NULL); }
-#line 1302 "tiger.tab.c" /* yacc.c:1646  */
+#line 1300 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 47 "tiger.y" /* yacc.c:1646  */
     { (yyval.decListVal) = A_DecList((yyvsp[-1].decVal), (yyvsp[0].decListVal)); }
-#line 1308 "tiger.tab.c" /* yacc.c:1646  */
+#line 1306 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 48 "tiger.y" /* yacc.c:1646  */
     { (yyval.decListVal) = A_DecList(NULL, NULL); }
-#line 1314 "tiger.tab.c" /* yacc.c:1646  */
+#line 1312 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 51 "tiger.y" /* yacc.c:1646  */
     { (yyval.decVal) = A_Dec(); }
-#line 1320 "tiger.tab.c" /* yacc.c:1646  */
+#line 1318 "tiger.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1324 "tiger.tab.c" /* yacc.c:1646  */
+#line 1322 "tiger.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
