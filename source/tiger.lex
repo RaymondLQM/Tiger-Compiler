@@ -9,6 +9,7 @@
 id [a-zA-Z][a-zA-Z0-9_]*
 int_val [0-9]+
 str_val \".*\"
+BLANK [ ]
 DOT [.]
 LP \(
 RP \)
@@ -49,7 +50,8 @@ while { return WHILE; }
 for { return FOR; }
 to { return TO; }
 break { return BREAK; }
-let { return IN; }
+let { return LET; printf("let"); }
+in { return IN; printf("in"); }
 end { return END; }
 function { return FUNCTION; }
 var { return VAR; }
@@ -68,11 +70,14 @@ id {
 	}
 int_val { 
 	yylval.iVal = atoi(yytext); 
+	printf("int");
 	return INTT; 
 	}
 str_val { 
+	printf("str");
 	return STRINGG;
 	} 
+BLANK {}
 \n {}
 .  { return ERROR; }
 

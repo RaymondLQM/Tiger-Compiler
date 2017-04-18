@@ -10,7 +10,6 @@
 %union {
 	int iVal;
 	string sVal;
-	A_dec decVal;
 	A_decList decListVal;
 	A_exp expVal;
 }
@@ -26,7 +25,6 @@
   ERROR
 
 %type <expVal> Exp ProgramRoot
-%type <decVal> Dec
 %type <decListVal> DecList
 
 %%
@@ -35,26 +33,15 @@ ProgramRoot:
 	;
 Exp:
 	INTT { $$ = A_IntExp(yylval.iVal); }
-	|Exp PLUS Exp { 
-		A_oper a = A_plusOP;
-		$$ = A_OpExp(a, $1, $3);
-		}
+	|Exp PLUS Exp { A_oper a = A_plusOP; $$ = A_OpExp(a, $1, $3); }
 	|LET DecList IN Exp END { $$ = A_LetExp($2, $4); }
 	;
 
 DecList:
-	Dec { $$ = A_DecList($1, NULL); }
-	|Dec DecList { $$ = A_DecList($1, $2); }
-	| { $$ = A_DecList(NULL, NULL); }
+	{ $$ = A_DecList(NULL, NULL); }
 	;
-Dec:
-	{ $$ = A_Dec(); }
-	;
+
 %%
-int main(int argc, char **argv){
-	yyparse();
-	showTree(root);
-}
 void yyerror(char *s){
 	printf("Error\n");
 }

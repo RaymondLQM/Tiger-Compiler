@@ -101,11 +101,10 @@ union YYSTYPE
 
 	int iVal;
 	string sVal;
-	A_dec decVal;
 	A_decList decListVal;
 	A_exp expVal;
 
-#line 109 "tiger.tab.h" /* yacc.c:1909  */
+#line 108 "tiger.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

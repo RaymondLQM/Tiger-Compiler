@@ -1,8 +1,11 @@
 
-OBJ := absyn.o util.o lex.yy.o tiger.tab.o 
+OBJ := main.o absyn.o util.o lex.yy.o tiger.tab.o 
 
 compiler: $(OBJ)
 	gcc -o compiler $(OBJ)
+
+main.o: main.c tiger.tab.c
+	gcc -c main.c -o main.o
 
 absyn.o: absyn.c
 	gcc -c absyn.c -o absyn.o
